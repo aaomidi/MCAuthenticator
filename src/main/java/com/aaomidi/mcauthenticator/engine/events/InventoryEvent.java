@@ -42,14 +42,14 @@ public class InventoryEvent implements Listener {
     }
 
     @EventHandler
-    public void onDrop(PlayerDropItemEvent e){
-        if(isInQR(e.getPlayer())) e.setCancelled(true);
+    public void onDrop(PlayerDropItemEvent e) {
+        if (isInQR(e.getPlayer())) e.setCancelled(true);
     }
 
     @EventHandler
-    public void onLeave(PlayerQuitEvent e){
+    public void onLeave(PlayerQuitEvent e) {
         User user = instance.getDataManager().getDataFile().getUser(e.getPlayer().getUniqueId());
-        if(user != null && user.isViewingQRCode()){
+        if (user != null && user.isViewingQRCode()) {
             user.stopViewingQRMap(e.getPlayer());
         }
     }

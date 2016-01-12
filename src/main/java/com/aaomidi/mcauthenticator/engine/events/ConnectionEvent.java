@@ -56,15 +56,20 @@ public class ConnectionEvent implements Listener {
     }
 
     @EventHandler
-    public void onQuit(PlayerQuitEvent e){
+    public void onQuit(PlayerQuitEvent e) {
         Player player = e.getPlayer();
         User user = instance.getDataManager().getDataFile().getUser(player.getUniqueId());
         if (user == null) {
             return;
         }
 
-        if(!user.isAuthenticated() && user.isFirstTime()){
-            user.setSecret(null);
+        if (!user.isAuthenticated()) {
+            if (user.isFirstTime()) {
+                user.setSecret(null);
+            } else {
+                user.setInetAddress(null);
+            }
+            instance.getDataManager().saveFile();
         }
     }
 }

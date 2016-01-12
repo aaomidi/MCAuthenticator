@@ -3,8 +3,8 @@ package com.aaomidi.mcauthenticator.engine.events;
 import com.aaomidi.mcauthenticator.MCAuthenticator;
 import com.aaomidi.mcauthenticator.config.ConfigReader;
 import com.aaomidi.mcauthenticator.model.User;
+import com.aaomidi.mcauthenticator.util.StringManager;
 import lombok.RequiredArgsConstructor;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -28,7 +28,7 @@ public class MoveEvent implements Listener {
 
         if (from.getBlockX() == to.getBlockX()
                 && from.getBlockY() == to.getBlockY()
-                && from.getBlockZ() == to.getBlockZ() && !ConfigReader.useMapQR()) {
+                && from.getBlockZ() == to.getBlockZ()) {
             return;
         }
 
@@ -38,12 +38,10 @@ public class MoveEvent implements Listener {
         }
 
         if (user.isFirstTime()) {
-            // StringManager.sendMessageWithoutColor(player, ChatColor.RED + "Visit the following link to see the QR code:\n" + ChatColor.AQUA + user.createQRCode(player.getName()));
-            if(ConfigReader.useMapQR() && user.isViewingQRCode()){
-                player.sendMessage(ChatColor.RED+"Right click your map to view your QR code! Once you have done this, enter your latest code.");
-            } else {
-                user.sendFancyQRMessage(player);
+            if (ConfigReader.useMapQR() && user.isViewingQRCode()) {
+                StringManager.sendMessage(player, "&cRight click your map to view your QR code! Once you have done this, enter your latest code.");
             }
+            user.sendFancyQRMessage(player);
         }
 
         event.setTo(from);

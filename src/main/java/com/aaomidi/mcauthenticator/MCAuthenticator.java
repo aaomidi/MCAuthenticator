@@ -3,7 +3,10 @@ package com.aaomidi.mcauthenticator;
 import com.aaomidi.mcauthenticator.config.ConfigReader;
 import com.aaomidi.mcauthenticator.engine.CommandHandler;
 import com.aaomidi.mcauthenticator.engine.DataManager;
-import com.aaomidi.mcauthenticator.engine.events.*;
+import com.aaomidi.mcauthenticator.engine.events.ChatEvent;
+import com.aaomidi.mcauthenticator.engine.events.ConnectionEvent;
+import com.aaomidi.mcauthenticator.engine.events.InventoryEvent;
+import com.aaomidi.mcauthenticator.engine.events.MoveEvent;
 import com.aaomidi.mcauthenticator.map.ImageMapRenderer;
 import com.aaomidi.mcauthenticator.model.User;
 import com.aaomidi.mcauthenticator.util.StringManager;
@@ -47,8 +50,8 @@ public class MCAuthenticator extends JavaPlugin {
     private void setupEvents() {
         registerEvent(new ChatEvent(this));
         registerEvent(new ConnectionEvent(this));
-        registerEvent(new MoveEvent(this));
         registerEvent(new InventoryEvent(this));
+        registerEvent(new MoveEvent(this));
     }
 
     private void registerEvent(Listener listener) {
