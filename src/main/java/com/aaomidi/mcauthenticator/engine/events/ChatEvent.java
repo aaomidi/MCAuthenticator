@@ -1,6 +1,7 @@
 package com.aaomidi.mcauthenticator.engine.events;
 
 import com.aaomidi.mcauthenticator.MCAuthenticator;
+import com.aaomidi.mcauthenticator.config.ConfigReader;
 import com.aaomidi.mcauthenticator.model.User;
 import com.aaomidi.mcauthenticator.util.StringManager;
 import lombok.RequiredArgsConstructor;
@@ -43,7 +44,7 @@ public class ChatEvent implements Listener {
         if (result) {
             StringManager.sendMessage(player, "&bYou have been authenticated.");
             user.setAuthenticated(true);
-            if(user.isViewingQRCode())
+            if (user.isViewingQRCode())
                 user.stopViewingQRMap(player);
             user.setInetAddress(player.getAddress().getAddress());
             instance.getDataManager().saveFile();
@@ -62,6 +63,11 @@ public class ChatEvent implements Listener {
         if (user == null || user.isAuthenticated()) {
             return;
         }
+
+        if (ConfigReader.aggressiveCommandblocking()) {
+            event.setMessage("");
+        }
+
         StringManager.sendMessage(player, "&cYou can not enter any commands until you authenticate.");
         event.setCancelled(true);
     }

@@ -15,6 +15,7 @@ public class ConfigReader {
     private static String staffPermission;
     private static String lockPermission;
     private static Boolean mapBasedQR;
+    private static Boolean aggressiveCommandBlocking;
 
     public static String getPrefix() {
         if (prefix == null) {
@@ -51,13 +52,21 @@ public class ConfigReader {
         staffPermission = null;
         lockPermission = null;
         mapBasedQR = null;
+        aggressiveCommandBlocking = null;
         StringManager.setPrefix(getPrefix());
     }
 
-    public static boolean useMapQR(){
-        if(mapBasedQR == null){
-            mapBasedQR = fileConfiguration.getBoolean("UseMapBasedQR", false);
+    public static boolean useMapQR() {
+        if (mapBasedQR == null) {
+            mapBasedQR = fileConfiguration.getBoolean("Map-Based-QR", false);
         }
         return mapBasedQR;
+    }
+
+    public static boolean aggressiveCommandblocking() {
+        if (aggressiveCommandBlocking == null) {
+            aggressiveCommandBlocking = fileConfiguration.getBoolean("Aggressive-Command-Blocking");
+        }
+        return aggressiveCommandBlocking;
     }
 }
